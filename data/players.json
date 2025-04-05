@@ -1,0 +1,227 @@
+[
+  {
+    "name": "s1mple",
+    "team": "Natus Vincere",
+    "region": "CIS",
+    "flag": "ua",
+    "age": 27,
+    "role": "AWPer",
+    "majors": 13
+  },
+  {
+    "name": "ZywOo",
+    "team": "Team Vitality",
+    "region": "Europe",
+    "flag": "fr",
+    "age": 24,
+    "role": "AWPer",
+    "majors": 7
+  },
+  {
+    "name": "device",
+    "team": "Astralis",
+    "region": "Scandinavia",
+    "flag": "dk",
+    "age": 28,
+    "role": "AWPer",
+    "majors": 16
+  },
+  {
+    "name": "NiKo",
+    "team": "G2 Esports",
+    "region": "Europe",
+    "flag": "ba",
+    "age": 27,
+    "role": "Rifler",
+    "majors": 12
+  },
+  {
+    "name": "m0NESY",
+    "team": "G2 Esports",
+    "region": "CIS",
+    "flag": "ru",
+    "age": 19,
+    "role": "AWPer",
+    "majors": 3
+  },
+  {
+    "name": "donk",
+    "team": "Team Spirit",
+    "region": "CIS",
+    "flag": "ru",
+    "age": 18,
+    "role": "Rifler",
+    "majors": 2
+  },
+  {
+    "name": "Magisk",
+    "team": "Team Vitality",
+    "region": "Scandinavia",
+    "flag": "dk",
+    "age": 27,
+    "role": "Rifler",
+    "majors": 15
+  },
+  {
+    "name": "dupreeh",
+    "team": "Team Vitality",
+    "region": "Scandinavia",
+    "flag": "dk",
+    "age": 30,
+    "role": "Rifler",
+    "majors": 19
+  },
+  {
+    "name": "Xyp9x",
+    "team": "Astralis",
+    "region": "Scandinavia",
+    "flag": "dk",
+    "age": 29,
+    "role": "Support",
+    "majors": 17
+  },
+  {
+    "name": "shox",
+    "team": "Team Liquid",
+    "region": "Europe",
+    "flag": "fr",
+    "age": 32,
+    "role": "Rifler",
+    "majors": 17
+  },
+  {
+    "name": "KRIMZ",
+    "team": "Fnatic",
+    "region": "Scandinavia",
+    "flag": "se",
+    "age": 30,
+    "role": "Rifler",
+    "majors": 17
+  },
+  {
+    "name": "rain",
+    "team": "FaZe Clan",
+    "region": "Europe",
+    "flag": "no",
+    "age": 29,
+    "role": "Rifler",
+    "majors": 18
+  },
+  {
+    "name": "karrigan",
+    "team": "FaZe Clan",
+    "region": "Europe",
+    "flag": "dk",
+    "age": 33,
+    "role": "In-game leader",
+    "majors": 19
+  },
+  {
+    "name": "FalleN",
+    "team": "Imperial Esports",
+    "region": "South America",
+    "flag": "br",
+    "age": 33,
+    "role": "AWPer",
+    "majors": 14
+  },
+  {
+    "name": "coldzera",
+    "team": "00 Nation",
+    "region": "South America",
+    "flag": "br",
+    "age": 29,
+    "role": "Rifler",
+    "majors": 12
+  },
+  {
+    "name": "fer",
+    "team": "Imperial Esports",
+    "region": "South America",
+    "flag": "br",
+    "age": 32,
+    "role": "Rifler",
+    "majors": 13
+  },
+  {
+    "name": "Stewie2K",
+    "team": "Evil Geniuses",
+    "region": "North America",
+    "flag": "us",
+    "age": 27,
+    "role": "Rifler",
+    "majors": 10
+  },
+  {
+    "name": "EliGE",
+    "team": "Team Liquid",
+    "region": "North America",
+    "flag": "us",
+    "age": 27,
+    "role": "Rifler",
+    "majors": 11
+  },
+  {
+    "name": "Twistzz",
+    "team": "FaZe Clan",
+    "region": "North America",
+    "flag": "ca",
+    "age": 25,
+    "role": "Rifler",
+    "majors": 9
+  },
+  {
+    "name": "Brollan",
+    "team": "Ninjas in Pyjamas",
+    "region": "Scandinavia",
+    "flag": "se",
+    "age": 22,
+    "role": "Rifler",
+    "majors": 6
+  },
+  {
+    "name": "Hobbit",
+    "team": "Cloud9",
+    "region": "CIS",
+    "flag": "kz",
+    "age": 29,
+    "role": "Rifler",
+    "majors": 8
+  },
+  {
+    "name": "Jame",
+    "team": "Virtus.pro",
+    "region": "CIS",
+    "flag": "ru",
+    "age": 25,
+    "role": "AWPer",
+    "majors": 7
+  },
+  {
+    "name": "YEKINDAR",
+    "team": "Team Liquid",
+    "region": "Europe",
+    "flag": "lv",
+    "age": 24,
+    "role": "Rifler",
+    "majors": 5
+  },
+  {
+    "name": "ropz",
+    "team": "FaZe Clan",
+    "region": "Europe",
+    "flag": "ee",
+    "age": 25,
+    "role": "Rifler",
+    "majors": 9
+  },
+  {
+    "name": "djj",
+    "team": "shu",
+    "region": "china",
+    "flag": "cn",
+    "age": 24,
+    "role": "AWPER",
+    "majors": 133
+  }
+]
