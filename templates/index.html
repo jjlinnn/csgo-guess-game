@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>开始弗一把</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <h1>CSGO 弗里伯格</h1>
+
+  <input type="text" id="guessInput" placeholder="输入选手名字，如：s1mple" />
+  <ul id="suggestions" class="autocomplete-list"></ul>
+  <button onclick="submitGuess()">提交</button>
+  <button onclick="restartGame()">再玩一把</button>
+
+  <div id="result" class="result"></div>
+
+  <table id="playerTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Team</th>
+        <th>NAT</th>
+        <th>Age</th>
+        <th>Role</th>
+        <th>MAJ APP</th>
+      </tr>
+    </thead>
+    <tbody id="playerRow"></tbody>
+  </table>
+
+  <h2>➕ 添加新选手</h2>
+<div class="form-container">
+  <input id="name" placeholder="Name" />
+  <input id="team" placeholder="Team" />
+  <input id="region" placeholder="Region (e.g. CIS)" />
+  <input id="flag" placeholder="Flag Code (e.g. ua)" />
+  <input id="age" type="number" placeholder="Age" />
+  <input id="role" placeholder="Role (e.g. AWPer)" />
+  <input id="majors" type="number" placeholder="Majors" />
+  <button onclick="addPlayer()">添加选手</button>
+  <div id="add-result" style="margin-top: 10px;"></div>
+</div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
