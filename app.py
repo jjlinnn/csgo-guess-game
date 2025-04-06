@@ -1,14 +1,27 @@
 from flask import Flask, render_template, request, jsonify
-import json, random
+from flask_sqlalchemy import SQLAlchemy
+import random, os
 
 app = Flask(__name__)
 
-# 加载选手数据
-with open("data/players.json", "r") as f:
-    PLAYERS = json.load(f)
+# 数据库配置：Render 会自动提供 DATABASE_URL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# 随机选择一个目标选手
-target_player = random.choice(PLAYERS)
+# 数据模型：选手表
+class Player(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    team = db.Column(db.String(80))
+    region = db.Column(db.String(50))
+    flag = db.Column(db.String(10))
+    age = db.Column(db.Integer)
+    role = db.Column(db.String(50))
+    majors = db.Column(db.Integer)
+
+# 初始化目标选手
+target_player = None
 
 @app.route("/")
 def index():
@@ -16,64 +29,87 @@ def index():
 
 @app.route("/players")
 def get_players():
-    names = [p["name"] for p in PLAYERS]
+    # 用于自动补全
+    names = [p.name for p in Player.query.all()]
     return jsonify(names)
 
 @app.route("/restart", methods=["POST"])
 def restart():
     global target_player
-    target_player = random.choice(PLAYERS)
-    return jsonify({"message": "New game started."})
+    players = Player.query.all()
+    if not players:
+        return jsonify({"message": "数据库中没有选手数据，请先添加选手。"})
+    target_player = random.choice(players)
+    return jsonify({"message": "新游戏开始"})
 
 @app.route("/guess", methods=["POST"])
 def guess():
+    global target_player
     data = request.get_json()
     guess_name = data.get("guess", "").strip().lower()
 
-    guessed_player = next((p for p in PLAYERS if p["name"].lower() == guess_name), None)
+    guessed_player = Player.query.filter(
+        db.func.lower(Player.name) == guess_name
+    ).first()
 
     if not guessed_player:
         return jsonify({"result": "未找到该选手，请再试一次。"})
 
-    feedback = {}
+    if not target_player:
+        return jsonify({"result": "请先点击再玩一把开始新游戏。"})
 
+    # 比较逻辑
     def compare(field):
-        if guessed_player[field] == target_player[field]:
+        guessed = getattr(guessed_player, field)
+        target = getattr(target_player, field)
+        if guessed == target:
             return "correct"
-        elif guessed_player[field] > target_player[field]:
+        elif guessed > target:
             return "down"
         else:
             return "up"
 
-    feedback["age"] = compare("age")
-    feedback["majors"] = compare("majors")
-    feedback["region"] = "correct" if guessed_player["region"] == target_player["region"] else "wrong"
+    feedback = {
+        "age": compare("age"),
+        "majors": compare("majors"),
+        "region": "correct" if guessed_player.region == target_player.region else "wrong"
+    }
 
-    result_text = "🎉 恭喜你猜对了！" if guessed_player["name"].lower() == target_player["name"].lower() else "继续努力！"
+    result_text = "🎉 恭喜你猜对了！" if guessed_player.name.lower() == target_player.name.lower() else "继续努力！"
 
     return jsonify({
         "result": result_text,
         "feedback": feedback,
-        "player": guessed_player,
-        "correct": guessed_player["name"].lower() == target_player["name"].lower()
+        "player": {
+            "name": guessed_player.name,
+            "team": guessed_player.team,
+            "region": guessed_player.region,
+            "flag": guessed_player.flag,
+            "age": guessed_player.age,
+            "role": guessed_player.role,
+            "majors": guessed_player.majors
+        },
+        "correct": guessed_player.name.lower() == target_player.name.lower()
     })
+
 @app.route("/add_player", methods=["POST"])
 def add_player():
-    new_player = request.get_json()
-
-    # 加载当前数据
-    with open("data/players.json", "r") as f:
-        players = json.load(f)
-
-    # 添加新数据
-    players.append(new_player)
-
-    # 写入文件
-    with open("data/players.json", "w") as f:
-        json.dump(players, f, indent=2)
-
-    return jsonify({"message": f"成功添加选手：{new_player['name']}"})
-
+    data = request.get_json()
+    new_player = Player(
+        name=data["name"],
+        team=data["team"],
+        region=data["region"],
+        flag=data["flag"],
+        age=data["age"],
+        role=data["role"],
+        majors=data["majors"]
+    )
+    db.session.add(new_player)
+    db.session.commit()
+    return jsonify({"message": f"已添加 {new_player.name}!"})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
