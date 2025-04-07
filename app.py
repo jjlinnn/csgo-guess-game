@@ -108,6 +108,13 @@ def add_player():
     db.session.commit()
     return jsonify({"message": f"已添加 {new_player.name}!"})
 
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+# 注册 Flask-Admin 后台界面
+admin = Admin(app, name='CSGO Admin', template_mode='bootstrap4')
+admin.add_view(ModelView(Player, db.session))
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
