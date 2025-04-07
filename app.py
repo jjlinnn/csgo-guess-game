@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import random, os
 
 app = Flask(__name__)
-
+app.secret_key = os.environ.get("SECRET_KEY", "super-secret-key-for-local-dev")
 # 数据库配置：Render 会自动提供 DATABASE_URL
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
