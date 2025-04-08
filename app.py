@@ -174,12 +174,10 @@ from flask_admin.contrib.sqla import ModelView
 # 注册 Flask-Admin 后台界面
 admin = Admin(app, name='CSGO Admin', template_mode='bootstrap4')
 admin.add_view(SecureModelView(Player, db.session))
-
+admin.add_view(SecureModelView(User, db.session))
 if __name__ == "__main__":
     with app.app_context():
-        db.drop_all()
         db.create_all()
-
         # ✅ 如果没有 admin 用户，就创建一个默认管理员
         if not User.query.filter_by(username="admin").first():
             admin_user = User(username="admin")
