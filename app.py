@@ -12,8 +12,11 @@ app.secret_key = os.environ.get("SECRET_KEY", "super-secret-key-for-local-dev")
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://jiajiedeng:kY08mwmlzh60lMoNbSqtNCvGQEzMB02J@dpg-cvp7idvgi27c73b1143g-a.oregon-postgres.render.com/csgo_d1t4"
+
+
 db = SQLAlchemy(app)
 
 
