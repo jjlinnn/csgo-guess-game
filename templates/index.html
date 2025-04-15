@@ -15,7 +15,15 @@
 
   <div id="result" class="result"></div>
   {% if current_user.is_authenticated %}
-  <p>欢迎你，{{ current_user.username }} | <a href="/logout">退出</a></p>
+  <p>
+    欢迎你，{{ current_user.username }}（积分：{{ current_user.score }} 分） |
+    {% if current_user.username == 'admin' %}
+      <a href="/admin" target="_blank">后台管理</a> |
+    {% endif %}
+    <a href="/logout">退出</a>
+  </p>
+
+
 {% else %}
   <p><a href="/login">登录</a> | <a href="/register">注册</a></p>
 {% endif %}
