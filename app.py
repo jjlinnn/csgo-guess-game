@@ -35,15 +35,13 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
 # 数据模型：选手表
-class Player(db.Model):
+class Player(db.Model):  # 🔄 改名也可以保留 Player 不动，只改字段
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    team = db.Column(db.String(80))
-    region = db.Column(db.String(50))
-    flag = db.Column(db.String(10))
-    age = db.Column(db.Integer)
-    role = db.Column(db.String(50))
-    majors = db.Column(db.Integer)
+    name = db.Column(db.String(80), nullable=False)  # 卡牌名称
+    mana = db.Column(db.Integer)      # 本数
+    attack = db.Column(db.Integer)    # 攻击力
+    health = db.Column(db.Integer)    # 血量
+    tribe = db.Column(db.String(50)) 
 
 class SecureModelView(ModelView):
     def is_accessible(self):
@@ -147,12 +145,10 @@ def guess():
             },
             "player": {
                 "name": guessed_player.name,
-                "team": guessed_player.team,
-                "region": guessed_player.region,
-                "flag": guessed_player.flag,
-                "age": guessed_player.age,
-                "role": guessed_player.role,
-                "majors": guessed_player.majors,
+                "mana": guessed_player.mana,
+                "attack": guessed_player.attack,
+                "health": guessed_player.health,
+                "tribe": guessed_player.tribe
             },
             "correct": True,
             "guess_count": guess_count,
@@ -171,9 +167,9 @@ def guess():
             return "up"
 
     feedback = {
-        "age": compare("age"),
-        "majors": compare("majors"),
-        "region": "correct" if guessed_player.region == target_player.region else "wrong"
+        "mana": compare("mana"),
+        "attack": compare("attack"),
+        "health": compare("health")
     }
 
     # === 如果是第8次，强制游戏结束并公布答案 ===
@@ -183,12 +179,10 @@ def guess():
             "feedback": feedback,
             "player": {
                 "name": guessed_player.name,
-                "team": guessed_player.team,
-                "region": guessed_player.region,
-                "flag": guessed_player.flag,
-                "age": guessed_player.age,
-                "role": guessed_player.role,
-                "majors": guessed_player.majors,
+                "mana": guessed_player.mana,
+                "attack": guessed_player.attack,
+                "health": guessed_player.health,
+                "tribe": guessed_player.tribe
             },
             "correct": False,
             "guess_count": guess_count,
@@ -200,14 +194,12 @@ def guess():
         "result": "继续努力！",
         "feedback": feedback,
         "player": {
-            "name": guessed_player.name,
-            "team": guessed_player.team,
-            "region": guessed_player.region,
-            "flag": guessed_player.flag,
-            "age": guessed_player.age,
-            "role": guessed_player.role,
-            "majors": guessed_player.majors,
-        },
+                "name": guessed_player.name,
+                "mana": guessed_player.mana,
+                "attack": guessed_player.attack,
+                "health": guessed_player.health,
+                "tribe": guessed_player.tribe
+            },
         "correct": False,
         "guess_count": guess_count,
         "game_over": False
@@ -218,12 +210,10 @@ def add_player():
     data = request.get_json()
     new_player = Player(
         name=data["name"],
-        team=data["team"],
-        region=data["region"],
-        flag=data["flag"],
-        age=data["age"],
-        role=data["role"],
-        majors=data["majors"]
+        mana=data["mana"],
+        attack=data["attack"],
+        health=data["health"],
+        tribe=data["tribe"]
     )
     db.session.add(new_player)
     db.session.commit()
@@ -238,8 +228,9 @@ admin.add_view(SecureModelView(Player, db.session))
 admin.add_view(SecureModelView(User, db.session))
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
 
+        #db.drop_all()
+        #db.create_all()
         try:
             db.session.execute('ALTER TABLE "user" ADD COLUMN score INTEGER DEFAULT 0;')
             db.session.commit()

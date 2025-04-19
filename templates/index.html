@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <title>开始弗一把</title>
+  <title>开始弗一把：猜炉石随从</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <h1>CSGO 弗里伯格</h1>
+  <h1>猜炉石传说随从</h1>
 
-  <input type="text" id="guessInput" placeholder="输入选手名字，如：s1mple" />
+  <input type="text" id="guessInput" placeholder="输入随从名字，如：火羽精灵" />
   <ul id="suggestions" class="autocomplete-list"></ul>
   <button onclick="submitGuess()">提交</button>
   <button onclick="restartGame()">再玩一把</button>
 
   <div id="result" class="result"></div>
+
   {% if current_user.is_authenticated %}
   <p>
     欢迎你，{{ current_user.username }}（积分：{{ current_user.score }} 分） |
@@ -22,39 +23,34 @@
     {% endif %}
     <a href="/logout">退出</a>
   </p>
-
-
-{% else %}
+  {% else %}
   <p><a href="/login">登录</a> | <a href="/register">注册</a></p>
-{% endif %}
+  {% endif %}
 
-
+  <!-- 🔄 卡牌展示表 -->
   <table id="playerTable" style="display:none;">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Team</th>
-        <th>NAT</th>
-        <th>Age</th>
-        <th>Role</th>
-        <th>MAJ APP</th>
+        <th>名称</th>
+        <th>本数</th>
+        <th>攻击力</th>
+        <th>血量</th>
+        <th>种族</th>
       </tr>
     </thead>
     <tbody id="playerRow"></tbody>
   </table>
 
-  <h2>➕ 添加新选手</h2>
-<div class="form-container">
-  <input id="name" placeholder="Name" />
-  <input id="team" placeholder="Team" />
-  <input id="region" placeholder="Region (e.g. CIS)" />
-  <input id="flag" placeholder="Flag Code (e.g. ua)" />
-  <input id="age" type="number" placeholder="Age" />
-  <input id="role" placeholder="Role (e.g. AWPer)" />
-  <input id="majors" type="number" placeholder="Majors" />
-  <button onclick="addPlayer()">添加选手</button>
-  <div id="add-result" style="margin-top: 10px;"></div>
-</div>
+  <h2>➕ 添加新卡牌</h2>
+  <div class="form-container">
+    <input id="name" placeholder="名称（如：机械袋鼠）" />
+    <input id="mana" type="number" placeholder="本数（1~10）" />
+    <input id="attack" type="number" placeholder="攻击力" />
+    <input id="health" type="number" placeholder="血量" />
+    <input id="tribe" placeholder="种族（如：机械、野兽）" />
+    <button onclick="addPlayer()">添加卡牌</button>
+    <div id="add-result" style="margin-top: 10px;"></div>
+  </div>
 
   <script src="/static/script.js"></script>
 </body>
