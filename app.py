@@ -93,9 +93,16 @@ def index():
 
 @app.route("/players")
 def get_players():
-    # 用于自动补全
-    names = [p.name for p in Player.query.all()]
+    keyword = request.args.get("q", "").lower()
+    if keyword:
+        # 模糊匹配 SQL：名字中包含关键字即可
+        results = Player.query.filter(Player.name.ilike(f"%{keyword}%")).all()
+    else:
+        results = Player.query.limit(50).all()  # 没有关键词就返回最多 50 个
+
+    names = [p.name for p in results]
     return jsonify(names)
+
 
 @app.route("/restart", methods=["POST"])
 def restart():

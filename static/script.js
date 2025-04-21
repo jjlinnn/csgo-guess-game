@@ -62,16 +62,20 @@ document.getElementById("guessInput").addEventListener("input", function () {
 
   if (input.length === 0) return;
 
-  const matches = allNames.filter(name => name.toLowerCase().startsWith(input)).slice(0, 5);
-  matches.forEach(name => {
-    const li = document.createElement("li");
-    li.textContent = name;
-    li.onclick = () => {
-      document.getElementById("guessInput").value = name;
-      suggestionBox.innerHTML = "";
-    };
-    suggestionBox.appendChild(li);
-  });
+  // ✅ 改成带参数的请求
+  fetch(`/players?q=${encodeURIComponent(input)}`)
+    .then(res => res.json())
+    .then(matches => {
+      matches.slice(0, 5).forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        li.onclick = () => {
+          document.getElementById("guessInput").value = name;
+          suggestionBox.innerHTML = "";
+        };
+        suggestionBox.appendChild(li);
+      });
+    });
 });
 
 // ✅ 添加炉石卡牌
