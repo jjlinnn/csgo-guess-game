@@ -1,6 +1,11 @@
 function submitGuess() {
   const guess = document.getElementById("guessInput").value;
 
+
+  let allNames = [];
+
+
+
   fetch("/guess", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -47,13 +52,9 @@ function arrowClass(status) {
   return "";
 }
 
-let allNames = [];
 
-window.onload = function () {
-  fetch("/players")
-    .then(res => res.json())
-    .then(data => allNames = data);
-};
+
+
 
 document.getElementById("guessInput").addEventListener("input", function () {
   const input = this.value.toLowerCase();
@@ -102,3 +103,28 @@ function addPlayer() {
       );
     });
 }
+
+function loadMinionList() {
+  fetch("/all_minions")
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("minionList");
+      list.innerHTML = "";
+      data.forEach(minion => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${minion.name}</strong>`;
+        list.appendChild(li);
+      });
+    });
+}
+
+// 页面加载时调用
+
+
+window.onload = function () {
+  fetch("/restart", { method: "POST" });
+  loadMinionList();  // ✅ 新加的
+  fetch("/players")
+    .then(res => res.json())
+    .then(data => allNames = data);
+};

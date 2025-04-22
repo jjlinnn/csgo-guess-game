@@ -84,12 +84,26 @@ def logout():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/all_minions")
+def all_minions():
+    players = Player.query.order_by(Player.mana.asc()).all()
+    result = [
+        {
+            "name": p.name,
+            "mana": p.mana,
+            "attack": p.attack,
+            "health": p.health
+        }
+        for p in players
+    ]
+    return jsonify(result)
 
 @app.route("/players")
 def get_players():

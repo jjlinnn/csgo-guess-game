@@ -6,52 +6,67 @@
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <h1>猜炉石传说随从</h1>
+  <div style="display: flex; align-items: flex-start; gap: 30px;">
 
-  <input type="text" id="guessInput" placeholder="输入随从名字，如：火羽精灵" />
-  <ul id="suggestions" class="autocomplete-list"></ul>
-  <button onclick="submitGuess()">提交</button>
-  <button onclick="restartGame()">再玩一把</button>
+    <!-- ✅ 左侧：主游戏区域 -->
+    <div style="flex: 2;">
+      <h1>猜炉石传说随从</h1>
 
-  <div id="result" class="result"></div>
+      <div class="autocomplete-wrapper">
+        <input type="text" id="guessInput" placeholder="输入随从名字，如：火羽精灵" />
+        <ul id="suggestions" class="autocomplete-list"></ul>
+      </div>
+      <button onclick="submitGuess()">提交</button>
+      <button onclick="restartGame()">再玩一把</button>
 
-  {% if current_user.is_authenticated %}
-  <p>
-    欢迎你，{{ current_user.username }}（积分：{{ current_user.score }} 分） |
-    {% if current_user.username == 'admin' %}
-      <a href="/admin" target="_blank">后台管理</a> |
-    {% endif %}
-    <a href="/logout">退出</a>
-  </p>
-  {% else %}
-  <p><a href="/login">登录</a> | <a href="/register">注册</a></p>
-  {% endif %}
+      <div id="result" class="result"></div>
 
-  <!-- 🔄 卡牌展示表 -->
-  <table id="playerTable" style="display:none;">
-    <thead>
-      <tr>
-        <th>名称</th>
-        <th>本数</th>
-        <th>攻击力</th>
-        <th>血量</th>
-        <th>种族</th>
-      </tr>
-    </thead>
-    <tbody id="playerRow"></tbody>
-  </table>
+      {% if current_user.is_authenticated %}
+      <p>
+        欢迎你，{{ current_user.username }}（积分：{{ current_user.score }} 分） |
+        {% if current_user.username == 'admin' %}
+          <a href="/admin" target="_blank">后台管理</a> |
+        {% endif %}
+        <a href="/logout">退出</a>
+      </p>
+      {% else %}
+      <p><a href="/login">登录</a> | <a href="/register">注册</a></p>
+      {% endif %}
 
-  <h2>➕ 添加新卡牌</h2>
-  <div class="form-container">
-    <input id="name" placeholder="名称（如：机械袋鼠）" />
-    <input id="mana" type="number" placeholder="本数（1~10）" />
-    <input id="attack" type="number" placeholder="攻击力" />
-    <input id="health" type="number" placeholder="血量" />
-    <input id="tribe" placeholder="种族（如：机械、野兽）" />
-    <button onclick="addPlayer()">添加卡牌</button>
-    <div id="add-result" style="margin-top: 10px;"></div>
+      <table id="playerTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>本数</th>
+            <th>攻击力</th>
+            <th>血量</th>
+            <th>种族</th>
+          </tr>
+        </thead>
+        <tbody id="playerRow"></tbody>
+      </table>
+
+      <h2>➕ 添加新卡牌</h2>
+      <div class="form-container">
+        <input id="name" placeholder="名称（如：机械袋鼠）" />
+        <input id="mana" type="number" placeholder="本数（1~10）" />
+        <input id="attack" type="number" placeholder="攻击力" />
+        <input id="health" type="number" placeholder="血量" />
+        <input id="tribe" placeholder="种族（如：机械、野兽）" />
+        <button onclick="addPlayer()">添加卡牌</button>
+        <div id="add-result" style="margin-top: 10px;"></div>
+      </div>
+    </div>
+
+    <!-- ✅ 右侧：滚动卡牌列表 -->
+    <div style="flex: 1; max-height: 600px; overflow-y: auto; border-left: 1px solid #ccc; padding-left: 10px;">
+      <h3>全部可猜卡牌（按本数排序）</h3>
+      <ul id="minionList" style="list-style: none; padding-left: 0;"></ul>
+    </div>
+
   </div>
 
   <script src="/static/script.js"></script>
 </body>
+
 </html>
