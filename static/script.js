@@ -127,4 +127,15 @@ window.onload = function () {
   fetch("/players")
     .then(res => res.json())
     .then(data => allNames = data);
+  fetch("/leaderboard")
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("leaderboardList");
+      list.innerHTML = "";
+      data.forEach(u => {
+        const li = document.createElement("li");
+        li.textContent = `${u.username}：${u.score} 分`;
+        list.appendChild(li);
+      });
+    });
 };

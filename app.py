@@ -89,6 +89,9 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
+    top_users = (
+        User.query.order_by(User.score.desc().nullslast()).limit(3).all()
+    )
     return render_template("index.html")
 
 @app.route("/all_minions")
@@ -240,6 +243,14 @@ def add_player():
     db.session.commit()
     return jsonify({"message": f"已添加 {new_player.name}!"})
 
+@app.route("/leaderboard")
+def leaderboard():
+    top_users = User.query.filter(User.score != None).order_by(User.score.desc()).limit(4).all()
+    return jsonify([
+        {"username": u.username, "score": u.score or 0}
+        for u in top_users
+    ])
+
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
@@ -252,12 +263,12 @@ if __name__ == "__main__":
 
         #db.drop_all()
         #db.create_all()
-        try:
-            db.session.execute('ALTER TABLE "user" ADD COLUMN score INTEGER DEFAULT 0;')
-            db.session.commit()
-            print("✅ 已添加 score 字段")
-        except:
-            print("⚠️ score 字段可能已存在，跳过")
+        # try:
+        #     db.session.execute('ALTER TABLE "user" ADD COLUMN score INTEGER DEFAULT 0;')
+        #     db.session.commit()
+        #     print("✅ 已添加 score 字段")
+        # except:
+        #     print("⚠️ score 字段可能已存在，跳过")
         # ✅ 如果没有 admin 用户，就创建一个默认管理员
         if not User.query.filter_by(username="admin").first():
             admin_user = User(username="admin")

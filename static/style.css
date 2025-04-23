@@ -123,4 +123,24 @@ body {
     border: none;
     cursor: pointer;
   }
+
+  .leaderboard {
+    list-style: none;
+    padding: 0;
+    font-size: 18px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 10px auto;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .leaderboard li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .leaderboard li:last-child {
+    border-bottom: none;
+  }
   
