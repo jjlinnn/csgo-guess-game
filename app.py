@@ -126,7 +126,7 @@ def restart():
     global target_player
     players = Player.query.all()
     target_player = random.choice(players)
-    session["guess_count"] = 0  # ✅ 重置计数器
+    session["guess_count"] = 0 
     return jsonify({"message": "新游戏开始"})
 
 @app.route("/guess", methods=["POST"])
@@ -275,7 +275,7 @@ if __name__ == "__main__":
             admin_user.set_password("Djj@2024!")  # 你可以改成自己密码
             db.session.add(admin_user)
             db.session.commit()
-            print("✅ 管理员账号 admin/123456 已创建")
+            print("✅ 管理员账号 admin/Djj@2024! 已创建")
             
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
